@@ -46,7 +46,7 @@ it.  The name of the radio client application is "mqsoapy".
 
 In addition the radio supports the reception of GPS PPS signals
 over a MQTT topic subscription.   Anytime a message is received
-over the PPS topic the radio client writes out a audacity formatted
+over the PPS topic the radio client writes out an Audacity formatted
 label to a text file with the same name as the sound file.
 In this way the sound file can be kept in sync with GPS time.
 The name of the application that publishes the PPS signal
