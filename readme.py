@@ -30,13 +30,6 @@ the MQTT queue.  This way the radio levels can
 be checked and the gain of the radio adjusted
 using the radio's MQTT control (topic) channel. 
 
-If however you want to listen to the captured
-stream or to see a waterfall of it, the assumption
-is that you would use a third party radio client to
-read the output file as it is writing - either from 
-the computer hosting the client or over a network 
-file server.
-
 The radio client supports the following commands
 over the command topic:
 
@@ -56,6 +49,13 @@ bt true    # enable bias tee
 da true    # enable digital agc
 ot true    # enable offset tune
 ```
+
+If you want to listen to the captured
+stream or to see a waterfall of it, the assumption
+is that you would use a third party radio client to
+read the output file as it is writing - either from 
+the computer hosting the client or over a network 
+file server.
 
 That said the intent of the radio client is for unattended
 operation, with the MQTT queue serving to both
