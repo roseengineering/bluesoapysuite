@@ -1,6 +1,6 @@
 This repo contains a MQTT controlled SDR radio client.
-Instead of using a GUI or the command line the
-commands to radio are over MQTT.
+Instead of using a GUI or the command line to communicate
+with your SDR radio, commands and status messages are sent over MQTT instead.
 
 The radio client program itself is quite simple.  It 
 uses the SoapySDR client to capture the SDR radio
