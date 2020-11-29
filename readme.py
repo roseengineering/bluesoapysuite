@@ -81,15 +81,15 @@ the satellite(s).
 
 To communicate over the MQTT queue and send control commands
 to radio client as well as receive status messages from the radio,
-an application named "mqclient" is also provided.  Any
-line typed in the application get sent over the MQTT topic that
+an application named "mqclient" is provided.  Any
+line typed in the application gets sent over the MQTT topic that
 serves as the radio client's control channel.
 
 {run("python3 mqclient.py --help")}
 
 But what if you do not have a network?  What if you are
-outside without a LAN gathering radio signals?  For this, there another
-application proved called "mqproxy".  This application proxies
+outside without a LAN gathering radio signals?  For this, another
+application is provided called "mqproxy".  This application proxies
 Bluetooth signals from your phone, say, to and from 
 the MQTT queue, thereby letting you control the radio client 
 from your phone.  The BLE-MQTT proxy app using the "BLE UART" device standard
