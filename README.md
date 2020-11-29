@@ -149,7 +149,7 @@ from your phone.  The BLE-MQTT proxy app uses the "BLE UART" device standard
 to do this.
 Any line sent over a "BLE UART" bluetooth connection is relayed to the
 MQTT radio control topic.  And all messages received over the 
-MQTT queue are sent back.  There are two phone apps I know
+MQTT queue are sent back.  There are two phone apps I know of
 that support communication over the "BLE UART" standard.  They are
 nRF UART and Bluefruit LE Connect.
 
