@@ -2,7 +2,7 @@
 import subprocess 
 
 
-def run(command, language="bash"):
+def run(command, language=""):
     proc = subprocess.Popen("PYTHONPATH=. " + command, shell=True, stdout=subprocess.PIPE)
     buf = proc.stdout.read().decode()
     proc.wait()

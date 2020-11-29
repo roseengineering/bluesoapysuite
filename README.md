@@ -26,7 +26,7 @@ send commands to it and for receiving status reports from
 it.  The name of the radio client application is "mqsoapy".
 
 
-```bash
+```
 $ python3 mqsoapy.py --help
 usage: mqsoapy.py [-h] [--broker BROKER] [--port PORT] [--keepalive KEEPALIVE]
                   [--topic TOPIC] [--pps-topic PPS_TOPIC] [--driver DRIVER]
@@ -77,7 +77,7 @@ The name of the application that publishes the PPS signal
 to the MQTT is "mqpps".
 
 
-```bash
+```
 $ python3 mqpps.py --help
 usage: mqpps.py [-h] [--broker BROKER] [--port PORT] [--keepalive KEEPALIVE]
                 [--topic TOPIC] [--interval INTERVAL]
@@ -100,7 +100,7 @@ line typed in the application get sent over the MQTT topic that
 serves as the radio client's control channel.
 
 
-```bash
+```
 $ python3 mqclient.py --help
 usage: mqclient.py [-h] [--broker BROKER] [--port PORT]
                    [--keepalive KEEPALIVE] [--topic TOPIC]
@@ -128,7 +128,7 @@ that support communication over BLE uart.  They are
 nRF UART and the Bluefruit LE Connect apps.
 
 
-```bash
+```
 $ python3 mqproxy.py --help
 usage: mqproxy.py [-h] [--broker BROKER] [--port PORT] [--keepalive KEEPALIVE]
                   [--topic TOPIC]
