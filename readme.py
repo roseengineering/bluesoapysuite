@@ -88,16 +88,17 @@ serves as the radio client's control channel.
 {run("python3 mqclient.py --help")}
 
 But what if you do not have a network?  What if you are
-outside without a LAN gathering radio signals?  So there another
+outside without a LAN gathering radio signals?  For this, there another
 application proved called "mqproxy".  This application proxies
 Bluetooth signals from your phone, say, to and from 
-the MQTT queue.  Thereby letting you control the radio client 
-from your phone.  mqproxy using the BLE uart device standard.
-Any line sent over a BLE uart connection is relayed to the
+the MQTT queue, thereby letting you control the radio client 
+from your phone.  The BLE-MQTT proxy app using the "BLE UART" device standard
+to communicate.
+Any line sent over a "BLE UART" bluetooth connection is relayed to the
 MQTT radio control topic.  And all messages received over the 
 MQTT queue are sent back.  There are two phone apps I know
-that support communication over BLE uart.  They are
-nRF UART and the Bluefruit LE Connect apps.
+that support communication over the "BLE UART" standard.  They are
+nRF UART and Bluefruit LE Connect.
 
 {run("python3 mqproxy.py --help")}
 
