@@ -145,8 +145,8 @@ outside without a LAN gathering radio signals?  For this, another
 application is provided called "mqproxy".  This application proxies
 Bluetooth signals from your phone, say, to and from 
 the MQTT queue, thereby letting you control the radio client 
-from your phone.  The BLE-MQTT proxy app using the "BLE UART" device standard
-to communicate.
+from your phone.  The BLE-MQTT proxy app uses the "BLE UART" device standard
+to do this.
 Any line sent over a "BLE UART" bluetooth connection is relayed to the
 MQTT radio control topic.  And all messages received over the 
 MQTT queue are sent back.  There are two phone apps I know
