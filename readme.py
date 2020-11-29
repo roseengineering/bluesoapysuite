@@ -37,10 +37,32 @@ read the output file as it is writing - either from
 the computer hosting the client or over a network 
 file server.
 
+The radio client supports the following commands
+over the command topic:
+
+```
+p [0|1]    # pause or unpause the stream
+g xxx.x    # set gain of the radio
+a [0|1]    # enable or disable automatic gain control
+r xxxxx    # set the sampling rate of the radio in Hertz
+f xxxxx    # set the frequency of the radio in Hertz
+k 1        # kill the current stream and start a new one
+K 1        # kill the application itself with an exit code of 1
+
+(see https://github.com/pothosware/SoapyRTLSDR/blob/master/Settings.cpp)
+ds [0|1|2] # set IQ or direct sampling mode
+iq true    # enable IQ signal swap
+bt true    # enable bias tee 
+da true    # enable digital agc
+ot true    # enable offset tune
+```
+
 That said the intent of the radio client is for unattended
 operation, with the MQTT queue serving to both
 send commands to it and for receiving status reports from
 it.  The name of the radio client application is "mqsoapy".
+
+
 
 {run("python3 mqsoapy.py --help")}
 
