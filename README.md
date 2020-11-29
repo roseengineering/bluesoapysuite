@@ -74,7 +74,10 @@ over the PPS topic the radio client writes out an Audacity formatted
 label to a text file with the same name as the sound file.
 In this way the sound file can be kept in sync with GPS time.
 The name of the application that publishes the PPS signal
-to the MQTT is "mqpps".
+to the MQTT is "mqpps".  The program listens to the gpsd socket
+on your computer and publishes the GPS time over the given
+MQTT topic whenever a full "TPV" message is received from
+the satellite(s).
 
 
 ```
