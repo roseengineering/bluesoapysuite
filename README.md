@@ -16,7 +16,7 @@ be checked and the gain of the radio adjusted
 using the radio's MQTT control (topic) channel. 
 
 The radio client supports the following commands
-over the command topic:
+over the control channel:
 
 ```
 p [0|1]    # pause or unpause the stream
