@@ -2,8 +2,8 @@ This repo contains a MQTT controlled SDR radio client.
 Instead of using a GUI or the command line to communicate
 with your SDR radio, commands and status messages are sent over MQTT instead.
 
-The radio client program itself is quite simple.  It 
-uses the SoapySDR client to capture the SDR radio
+The radio client program itself is quite simple.  It
+is a Python program that uses the SoapySDR library to capture the SDR radio
 stream and write the result to a file as either
 a wav sound file or a raw file.
 
