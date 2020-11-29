@@ -107,7 +107,7 @@ the satellite(s).
 ```
 $ python3 mqpps.py --help
 usage: mqpps.py [-h] [--broker BROKER] [--port PORT] [--keepalive KEEPALIVE]
-                [--topic TOPIC] [--interval INTERVAL]
+                [--pps-topic PPS_TOPIC] [--interval INTERVAL]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -115,7 +115,8 @@ optional arguments:
   --port PORT           broker port (default: 1883)
   --keepalive KEEPALIVE
                         broker keep alive (default: 60)
-  --topic TOPIC         PPS topic (default: pps)
+  --pps-topic PPS_TOPIC
+                        PPS topic (default: pps)
   --interval INTERVAL   publish interval in seconds (default: 10)
 ```
 
