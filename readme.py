@@ -81,7 +81,7 @@ the satellite(s).
 
 To communicate over the MQTT queue and send control commands
 to radio client as well as receive status messages from the radio,
-a application named "mqclient" is also provided.  Any
+an application named "mqclient" is also provided.  Any
 line typed in the application get sent over the MQTT topic that
 serves as the radio client's control channel.
 
