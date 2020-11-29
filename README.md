@@ -113,7 +113,7 @@ optional arguments:
   --port PORT           broker port (default: 1883)
   --keepalive KEEPALIVE
                         broker keep alive (default: 60)
-  --topic TOPIC         command topic (default: pps)
+  --topic TOPIC         PPS topic (default: pps)
   --interval INTERVAL   publish interval in seconds (default: 10)
 ```
 

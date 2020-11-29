@@ -10,7 +10,7 @@ parser = argparse.ArgumentParser(
 parser.add_argument("--broker", default="127.0.0.1", help='broker host')
 parser.add_argument("--port", default=1883, help='broker port')
 parser.add_argument("--keepalive", default=60, help='broker keep alive')
-parser.add_argument("--topic", default="pps", help='command topic')
+parser.add_argument("--topic", default="pps", help='PPS topic')
 parser.add_argument("--interval", default=10, help='publish interval in seconds')
 
 def gen_topic(name=None):
