@@ -15,7 +15,7 @@ $ {command}
 
 
 print(f"""\
-!(gobox.jpg)
+![gobox](gobox.jpg)
 
 This repo contains a MQTT controlled SDR radio client.
 Instead of using a GUI or the command line to communicate
