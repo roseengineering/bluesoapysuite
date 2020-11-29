@@ -4,7 +4,8 @@ import sys
 import argparse
 import paho.mqtt.client as mqtt
 
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser(
+    formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("--broker", default="127.0.0.1", help='broker host')
 parser.add_argument("--port", default=1883, help='broker port')
 parser.add_argument("--keepalive", default=60, help='broker keep alive')

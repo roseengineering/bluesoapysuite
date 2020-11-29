@@ -84,12 +84,12 @@ usage: mqpps.py [-h] [--broker BROKER] [--port PORT] [--keepalive KEEPALIVE]
 
 optional arguments:
   -h, --help            show this help message and exit
-  --broker BROKER       broker host
-  --port PORT           broker port
+  --broker BROKER       broker host (default: 127.0.0.1)
+  --port PORT           broker port (default: 1883)
   --keepalive KEEPALIVE
-                        broker keep alive
-  --topic TOPIC         command topic
-  --interval INTERVAL   publish interval in seconds
+                        broker keep alive (default: 60)
+  --topic TOPIC         command topic (default: pps)
+  --interval INTERVAL   publish interval in seconds (default: 10)
 ```
 
 
@@ -107,11 +107,11 @@ usage: mqclient.py [-h] [--broker BROKER] [--port PORT]
 
 optional arguments:
   -h, --help            show this help message and exit
-  --broker BROKER       broker host
-  --port PORT           broker port
+  --broker BROKER       broker host (default: 127.0.0.1)
+  --port PORT           broker port (default: 1883)
   --keepalive KEEPALIVE
-                        broker keep alive
-  --topic TOPIC         command topic
+                        broker keep alive (default: 60)
+  --topic TOPIC         command topic (default: f/tx)
 ```
 
 
