@@ -15,6 +15,8 @@ $ {command}
 
 
 print(f"""\
+!(gobox.jpg)
+
 This repo contains a MQTT controlled SDR radio client.
 Instead of using a GUI or the command line to communicate
 with your SDR radio, commands and status messages are sent over MQTT instead.
