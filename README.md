@@ -81,7 +81,7 @@ optional arguments:
   --dumb                dumb terminal (default: False)
   --output OUTPUT       write CF32 samples to file (default: out)
   --nowave              disable WAV header (default: False)
-  --meter               enable peak meter (default: False)
+  --meter               enable console peak meter (default: False)
   --pause               pause output (default: False)
   --refresh REFRESH     peak meter refresh in seconds (default: 5)
   --direct-samp DIRECT_SAMP
