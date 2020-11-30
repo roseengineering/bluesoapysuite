@@ -54,6 +54,7 @@ def to_float(param):
     except ValueError:
         pass
 
+###
 
 def on_fatal(param):
     global fatal
@@ -128,14 +129,18 @@ def on_setting(key, param):
     broker.publish(gen_topic(key), str(val))
 
 
+def on_pps(payload):
+    if timefile and not paused:
+        sec = samples_total / rate
+        timefile.write(f"{sec:.3f}\t{sec:.3f}\t{payload}\n")
+        timefile.flush()
+
+
 def on_message(client, userdata, msg):
+    payload = msg.payload.decode('latin').strip()
     try:
-        payload = msg.payload.decode('latin').strip()
         if payload and msg.topic == args.pps_topic:
-            if timefile and not paused:
-                sec = samples_total / rate
-                timefile.write(f"{sec:.3f}\t{sec:.3f}\t{payload}\n")
-                timefile.flush()
+            on_pps(payload)
         if payload and msg.topic == args.topic:
             cmd, _, param = payload.partition(' ') 
             param = param.strip()
