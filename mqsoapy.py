@@ -29,7 +29,7 @@ parser.add_argument("--nobroker", action="store_true", help="disable mqtt broker
 parser.add_argument("--dumb", action="store_true", help="dumb terminal")
 parser.add_argument("--output", default="out", help="write CF32 samples to file")
 parser.add_argument("--nowave", action="store_true", help="disable WAV header")
-parser.add_argument("--meter", action="store_true", help="enable peak meter")
+parser.add_argument("--meter", action="store_true", help="enable console peak meter")
 parser.add_argument("--pause", action="store_true", help="pause output")
 parser.add_argument("--refresh", default=5, help="peak meter refresh in seconds")
 
