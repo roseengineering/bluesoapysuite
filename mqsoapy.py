@@ -125,7 +125,7 @@ def on_setting(key, param):
     if param:
         radio.writeSetting(key, param)
     val = radio.readSetting(key)
-    broker.publish(gen_topic("setting"), str(val))
+    broker.publish(gen_topic(key), str(val))
 
 
 def on_message(client, userdata, msg):
