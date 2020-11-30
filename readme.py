@@ -36,13 +36,14 @@ The radio client supports the following commands
 over the control channel:
 
 ```
-p [0|1]    # pause or unpause the stream
+a true     # enable or disable automatic gain control
 g xxx.x    # set gain of the radio
-a [0|1]    # enable or disable automatic gain control
 r xxxxx    # set the sampling rate of the radio in Hertz
 f xxxxx    # set the frequency of the radio in Hertz
-k 1        # kill the current stream and start a new one
-K 1        # kill the application itself with an exit code of 1
+
+p true     # pause or unpause the stream
+k true     # kill the current stream and start a new one
+K true     # kill the application itself with an exit code of 1
 
 (see https://github.com/pothosware/SoapyRTLSDR/blob/master/Settings.cpp)
 ds [0|1|2] # set IQ or direct sampling mode

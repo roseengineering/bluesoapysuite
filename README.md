@@ -19,13 +19,14 @@ The radio client supports the following commands
 over the control channel:
 
 ```
-p [0|1]    # pause or unpause the stream
+a true     # enable or disable automatic gain control
 g xxx.x    # set gain of the radio
-a [0|1]    # enable or disable automatic gain control
 r xxxxx    # set the sampling rate of the radio in Hertz
 f xxxxx    # set the frequency of the radio in Hertz
-k 1        # kill the current stream and start a new one
-K 1        # kill the application itself with an exit code of 1
+
+p true     # pause or unpause the stream
+k true     # kill the current stream and start a new one
+K true     # kill the application itself with an exit code of 1
 
 (see https://github.com/pothosware/SoapyRTLSDR/blob/master/Settings.cpp)
 ds [0|1|2] # set IQ or direct sampling mode
@@ -55,7 +56,7 @@ $ python3 mqsoapy.py --help
 usage: mqsoapy.py [-h] [--broker BROKER] [--port PORT] [--keepalive KEEPALIVE]
                   [--topic TOPIC] [--pps-topic PPS_TOPIC] [--driver DRIVER]
                   [--packet-size PACKET_SIZE] [--freq FREQ] [--rate RATE]
-                  [--gain GAIN] [--agc AGC] [--nobroker] [--dumb]
+                  [--gain GAIN] [--agc] [--nobroker] [--dumb]
                   [--output OUTPUT] [--nowave] [--meter] [--pause]
                   [--refresh REFRESH] [--direct-samp DIRECT_SAMP] [--iq-swap]
                   [--biastee] [--digital-agc] [--offset-tune]
@@ -75,7 +76,7 @@ optional arguments:
   --freq FREQ           center frequency in hertz (default: None)
   --rate RATE           sample rate in hertz (default: None)
   --gain GAIN           front end gain in dB (default: None)
-  --agc AGC             0=disable, 1=enable AGC (default: None)
+  --agc                 enable AGC (default: False)
   --nobroker            disable mqtt broker (default: False)
   --dumb                dumb terminal (default: False)
   --output OUTPUT       write CF32 samples to file (default: out)

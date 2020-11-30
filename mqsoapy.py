@@ -9,7 +9,7 @@ import SoapySDR
 from datetime import datetime
 from SoapySDR import SOAPY_SDR_RX, SOAPY_SDR_CF32
 
-seconds = 10
+restart_seconds = 10
 
 parser = argparse.ArgumentParser(
     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -24,7 +24,7 @@ parser.add_argument("--packet-size", default=1024, help='packet size')
 parser.add_argument("--freq", type=np.float, help="center frequency in hertz")
 parser.add_argument("--rate", type=np.float, help="sample rate in hertz")
 parser.add_argument("--gain", type=np.float, help="front end gain in dB")
-parser.add_argument("--agc", help="0=disable, 1=enable AGC")
+parser.add_argument("--agc", action="store_true", help="enable AGC")
 parser.add_argument("--nobroker", action="store_true", help="disable mqtt broker")
 parser.add_argument("--dumb", action="store_true", help="dumb terminal")
 parser.add_argument("--output", default="out", help="write CF32 samples to file")
@@ -57,7 +57,7 @@ def to_float(param):
 
 def on_fatal(param):
     global fatal
-    if param == "1":
+    if param.lower() == "true":
         fatal = True
         info('fatal killing')
     else:
@@ -66,7 +66,7 @@ def on_fatal(param):
 
 def on_kill(param):
     global killed
-    if param == "1":
+    if param.lower() == "true":
         killed = True
         info('killing stream')
     else:
@@ -75,14 +75,9 @@ def on_kill(param):
 
 def on_pause(param):
     global paused
-    if param == "1":
-        paused = True
-        info('pausing stream')
-    elif param == "0":
-        paused = False
-        info('unpausing stream')
-    else: 
-        info('bad pause command')
+    if param:
+        paused = param.lower() == "true"
+    broker.publish(gen_topic("pause"), 'on' if paused else 'off')
 
 
 def on_rate(param):
@@ -120,12 +115,8 @@ def on_gain(param):
 
 
 def on_auto(param):
-    if param == "0": 
-        radio.setGainMode(SOAPY_SDR_RX, 0, False)
-    elif param == "1":
-        radio.setGainMode(SOAPY_SDR_RX, 0, True)
-    elif param:
-        info('bad agc command')
+    if param:
+        radio.setGainMode(SOAPY_SDR_RX, 0, param.lower() == "true")
     agc = radio.getGainMode(SOAPY_SDR_RX, 0)
     broker.publish(gen_topic("agc"), 'on' if agc else 'off')
 
@@ -141,7 +132,7 @@ def on_message(client, userdata, msg):
     try:
         payload = msg.payload.decode('latin').strip()
         if payload and msg.topic == args.pps_topic:
-            if timefile:
+            if timefile and not paused:
                 sec = samples_total / rate
                 timefile.write(f"{sec:.3f}\t{sec:.3f}\t{payload}\n")
                 timefile.flush()
@@ -234,10 +225,9 @@ def radio_settings():
         radio.setFrequency(SOAPY_SDR_RX, 0, args.freq)
     if args.rate:
         radio.setSampleRate(SOAPY_SDR_RX, 0, args.rate)
+    radio.setGainMode(SOAPY_SDR_RX, 0, args.agc);
     if args.gain:
         radio.setGain(SOAPY_SDR_RX, 0, args.gain)
-    if args.agc: 
-        radio.setGainMode(SOAPY_SDR_RX, 0, args.agc == "1");
     if args.direct_samp:
         radio.writeSetting("direct_samp", args.direct_samp)
     if args.iq_swap:
@@ -284,7 +274,7 @@ def main():
             radio_start()
         except Exception as e:
             info(f"Exception main(): {e}")
-            time.sleep(seconds)
+            time.sleep(restart_seconds)
 
 
 def close_file(f, name):
