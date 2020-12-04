@@ -15,12 +15,12 @@ parser = argparse.ArgumentParser(
     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
 parser.add_argument("--broker", default="127.0.0.1", help='broker host')
-parser.add_argument("--port", default=1883, help='broker port')
-parser.add_argument("--keepalive", default=60, help='broker keepalive in seconds')
+parser.add_argument("--port", default=1883, type=int, help='broker port')
+parser.add_argument("--keepalive", default=60, type=int, help='broker keepalive in seconds')
 parser.add_argument("--topic", default="f/tx", help='mqtt topic for command')
 parser.add_argument("--pps-topic", default="pps", help='mqtt topic for gps pps time')
 parser.add_argument("--driver", help='name of driver')
-parser.add_argument("--packet-size", default=1024, help='packet size')
+parser.add_argument("--packet-size", default=1024, type=int, help='packet size')
 parser.add_argument("--freq", type=np.float, help="center frequency in hertz")
 parser.add_argument("--rate", type=np.float, help="sample rate in hertz")
 parser.add_argument("--gain", type=np.float, help="front end gain in dB")
@@ -31,8 +31,9 @@ parser.add_argument("--output", default="out", help="write CF32 samples to file"
 parser.add_argument("--nowave", action="store_true", help="disable WAV header")
 parser.add_argument("--meter", action="store_true", help="enable console peak meter")
 parser.add_argument("--pause", action="store_true", help="pause output")
-parser.add_argument("--refresh", default=5, help="peak meter refresh in seconds")
-
+parser.add_argument("--refresh", default=5, type=int, help="peak meter refresh in seconds")
+parser.add_argument("--refresh-pps", default=10, type=int, help='pps refresh in seconds')
+ 
 # argString
 parser.add_argument("--direct-samp", help="0=off, 1=I, 2=Q channel")
 parser.add_argument("--iq-swap", action="store_true", help="swap IQ signals")
@@ -129,10 +130,13 @@ def on_setting(key, param):
     broker.publish(gen_topic(key), str(val))
 
 
-def on_pps(payload):
+def on_pps(ts):
     if timefile and not paused:
         sec = samples_total / rate
-        timefile.write(f"{sec:.3f}\t{sec:.3f}\t{payload}\n")
+        dt = datetime.strptime(ts, "%Y-%m-%dT%H:%M:%S.%fZ")
+        if dt.second % args.refesh_pps == 0:
+            info(ts)
+        timefile.write(f"{sec:.3f}\t{sec:.3f}\t{ts}\n")
         timefile.flush()
 
 

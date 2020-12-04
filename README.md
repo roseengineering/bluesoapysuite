@@ -58,8 +58,9 @@ usage: mqsoapy.py [-h] [--broker BROKER] [--port PORT] [--keepalive KEEPALIVE]
                   [--packet-size PACKET_SIZE] [--freq FREQ] [--rate RATE]
                   [--gain GAIN] [--agc] [--nobroker] [--dumb]
                   [--output OUTPUT] [--nowave] [--meter] [--pause]
-                  [--refresh REFRESH] [--direct-samp DIRECT_SAMP] [--iq-swap]
-                  [--biastee] [--digital-agc] [--offset-tune]
+                  [--refresh REFRESH] [--refresh-pps REFRESH_PPS]
+                  [--direct-samp DIRECT_SAMP] [--iq-swap] [--biastee]
+                  [--digital-agc] [--offset-tune]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -69,7 +70,7 @@ optional arguments:
                         broker keepalive in seconds (default: 60)
   --topic TOPIC         mqtt topic for command (default: f/tx)
   --pps-topic PPS_TOPIC
-                        mqtt topic for gps time (default: pps)
+                        mqtt topic for gps pps time (default: pps)
   --driver DRIVER       name of driver (default: None)
   --packet-size PACKET_SIZE
                         packet size (default: 1024)
@@ -84,6 +85,8 @@ optional arguments:
   --meter               enable console peak meter (default: False)
   --pause               pause output (default: False)
   --refresh REFRESH     peak meter refresh in seconds (default: 5)
+  --refresh-pps REFRESH_PPS
+                        pps refresh in seconds (default: 10)
   --direct-samp DIRECT_SAMP
                         0=off, 1=I, 2=Q channel (default: None)
   --iq-swap             swap IQ signals (default: False)
@@ -108,7 +111,7 @@ the satellite(s).
 ```
 $ python3 mqpps.py --help
 usage: mqpps.py [-h] [--broker BROKER] [--port PORT] [--keepalive KEEPALIVE]
-                [--pps-topic PPS_TOPIC] [--interval INTERVAL]
+                [--pps-topic PPS_TOPIC]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -118,7 +121,6 @@ optional arguments:
                         broker keep alive (default: 60)
   --pps-topic PPS_TOPIC
                         PPS topic (default: pps)
-  --interval INTERVAL   publish interval in seconds (default: 10)
 ```
 
 

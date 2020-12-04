@@ -2,7 +2,6 @@
 
 import argparse
 import paho.mqtt.client as mqtt
-from datetime import datetime
 from gps import gps, WATCH_ENABLE, WATCH_NEWSTYLE
 
 parser = argparse.ArgumentParser(
@@ -39,7 +38,6 @@ def main():
             mode = nx['mode']
             ts = nx.get('time')
             if ts and (mode == 2 or mode == 3):
-                dt = datetime.strptime(ts, "%Y-%m-%dT%H:%M:%S.%fZ")
                 client.publish(args.pps_topic, ts) 
 
 if __name__ == '__main__':
