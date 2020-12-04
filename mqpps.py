@@ -11,7 +11,6 @@ parser.add_argument("--broker", default="127.0.0.1", help='broker host')
 parser.add_argument("--port", default=1883, help='broker port')
 parser.add_argument("--keepalive", default=60, help='broker keep alive')
 parser.add_argument("--pps-topic", default="pps", help='PPS topic')
-parser.add_argument("--interval", default=10, help='publish interval in seconds')
 
 def gen_topic(name=None):
     d = args.topic.split('/')[:-1]
@@ -41,8 +40,7 @@ def main():
             ts = nx.get('time')
             if ts and (mode == 2 or mode == 3):
                 dt = datetime.strptime(ts, "%Y-%m-%dT%H:%M:%S.%fZ")
-                if dt.second % args.interval == 0:
-                    client.publish(args.pps_topic, ts) 
+                client.publish(args.pps_topic, ts) 
 
 if __name__ == '__main__':
     args = parser.parse_args()

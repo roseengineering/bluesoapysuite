@@ -18,7 +18,7 @@ parser.add_argument("--broker", default="127.0.0.1", help='broker host')
 parser.add_argument("--port", default=1883, help='broker port')
 parser.add_argument("--keepalive", default=60, help='broker keepalive in seconds')
 parser.add_argument("--topic", default="f/tx", help='mqtt topic for command')
-parser.add_argument("--pps-topic", default="pps", help='mqtt topic for gps time')
+parser.add_argument("--pps-topic", default="pps", help='mqtt topic for gps pps time')
 parser.add_argument("--driver", help='name of driver')
 parser.add_argument("--packet-size", default=1024, help='packet size')
 parser.add_argument("--freq", type=np.float, help="center frequency in hertz")
@@ -295,7 +295,7 @@ def open_files():
     basename = f"{args.output}_{ts}Z_{freq/1e6:.6f}MHz"
     ext = 'txt'
     filename = f"{basename}.{ext}"
-    info(f"Opening {filename} for gps time")
+    info(f"Opening {filename} for gps pps time")
     timefile = open(filename, "w")
     ext = 'raw' if args.nowave else 'wav'
     filename = f"{basename}.{ext}"
