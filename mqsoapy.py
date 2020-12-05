@@ -35,7 +35,7 @@ parser.add_argument("--refresh", default=5, type=int, help="peak meter refresh i
 parser.add_argument("--refresh-pps", default=10, type=int, help='pps refresh in seconds')
  
 # argString
-parser.add_argument("--direct-samp", help="0=off, 1=I, 2=Q channel")
+parser.add_argument("--direct-samp", help="0=off, 1 or i=I, 2 or q=Q channel")
 parser.add_argument("--iq-swap", action="store_true", help="swap IQ signals")
 parser.add_argument("--biastee", action="store_true", help="enable bias tee")
 parser.add_argument("--digital-agc", action="store_true", help="enable digital AGC")
@@ -163,6 +163,8 @@ def on_message(client, userdata, msg):
             elif cmd == 'K':
                 on_fatal(param)
             elif cmd == 'ds':
+                if param.lower() == "i": param = "1"
+                if param.lower() == "q": param = "2"
                 on_setting("direct_samp", param)
             elif cmd == 'iq':
                 on_setting("iq_swap", param)
@@ -238,7 +240,10 @@ def radio_settings():
     if args.gain:
         radio.setGain(SOAPY_SDR_RX, 0, args.gain)
     if args.direct_samp:
-        radio.writeSetting("direct_samp", args.direct_samp)
+        param = args.direct_samp
+        if param.lower() == "i": param = "1"
+        if param.lower() == "q": param = "2"
+        radio.writeSetting("direct_samp", param)
     if args.iq_swap:
         radio.writeSetting("iq_swap", "true")
     if args.biastee:

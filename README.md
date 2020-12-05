@@ -88,7 +88,7 @@ optional arguments:
   --refresh-pps REFRESH_PPS
                         pps refresh in seconds (default: 10)
   --direct-samp DIRECT_SAMP
-                        0=off, 1=I, 2=Q channel (default: None)
+                        0=off, 1 or i=I, 2 or q=Q channel (default: None)
   --iq-swap             swap IQ signals (default: False)
   --biastee             enable bias tee (default: False)
   --digital-agc         enable digital AGC (default: False)
