@@ -19,23 +19,23 @@ print(f"""\
   - set_fact:
       fs_path: "{{{{ fs_path | default('/srv') }}}}"
 
-  # output directory
-
-  - become: yes
-    file: path={{{{ fs_path }}}} state=directory owner={{{{ user }}}} group={{{{ user }}}}
-
-  # bluezero / mqtt
+  # apt
 
   - become: yes
     apt:
       name:
       - python3-dbus
+      - mosquitto
+
+  # pip
 
   - become: yes
     pip:
       name:
       - bluezero
       - paho-mqtt
+
+  # ble
 
   - become: yes
     copy:
@@ -58,8 +58,12 @@ print(f"""\
 
 {copy("mqproxy.py", "/usr/local/bin/mqproxy")}
 {copy("mqsoapy.py", "/usr/local/bin/mqsoapy")}
-{copy("mqpps.py", "/usr/local/bin/mqpps")}
 {copy("mqclient.py", "/usr/local/bin/mqclient")}
+
+  # output directory
+
+  - become: yes
+    file: path={{{{ fs_path }}}} state=directory owner={{{{ user }}}} group={{{{ user }}}}
 
   - become: yes
     copy:
@@ -86,27 +90,14 @@ print(f"""\
         WantedBy=multi-user.target
 
   - become: yes
-    copy:
-      dest: /lib/systemd/system/mqpps.service
-      content: |
-        [Service]
-        ExecStart=/usr/bin/python3 -u /usr/local/bin/mqpps
-        Restart=on-failure
-        RestartSec=10s
-        [Install]
-        WantedBy=multi-user.target
-
-  - become: yes
     shell: |
       sudo systemctl enable mqproxy
       sudo systemctl enable mqsoapy
-      sudo systemctl enable mqpps
 
   - become: yes
     shell: |
       sudo systemctl restart mqproxy
       sudo systemctl restart mqsoapy
-      sudo systemctl restart mqpps
 """)
 
 
