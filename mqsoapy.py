@@ -164,7 +164,7 @@ def on_message(client, userdata, msg):
             param = param.strip()
             if cmd == 'i':
                 on_info(param)
-            if cmd == 'p':
+            elif cmd == 'p':
                 on_pause(param)
             elif cmd == 'g':
                 on_gain(param)
