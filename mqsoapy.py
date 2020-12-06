@@ -57,6 +57,20 @@ def to_float(param):
 
 ###
 
+def on_info(param):
+    chan = 0
+    for r in radio.getSampleRateRange(SOAPY_SDR_RX, chan):
+       payload = 'rate: {:.3f} KHz'.format(r.minimum() / 1e3)
+       info(payload)
+    for r in radio.getFrequencyRange(SOAPY_SDR_RX, chan):
+       payload = 'freq: {:.6f} - {:.6f} MHz'.format(
+           r.minimum() / 1e6, r.maximum() / 1e6)
+       info(payload)
+    r = radio.getGainRange(SOAPY_SDR_RX, chan)
+    payload = 'gain: {:.2f} - {:.2f} dB'.format(r.minimum(), r.maximum())
+    info(payload)
+
+
 def on_fatal(param):
     global fatal
     if param.lower() == "true":
@@ -148,6 +162,8 @@ def on_message(client, userdata, msg):
         if payload and msg.topic == args.topic:
             cmd, _, param = payload.partition(' ') 
             param = param.strip()
+            if cmd == 'i':
+                on_info(param)
             if cmd == 'p':
                 on_pause(param)
             elif cmd == 'g':
