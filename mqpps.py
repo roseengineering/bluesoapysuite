@@ -12,7 +12,7 @@ parser.add_argument("--keepalive", default=60, help='broker keep alive')
 parser.add_argument("--pps-topic", default="pps", help='PPS topic')
 
 def gen_topic(name=None):
-    d = args.topic.split('/')[:-1]
+    d = args.pps_topic.split('/')[:-1]
     if name is not None:
         d.append(name)
     return '/'.join(d)
