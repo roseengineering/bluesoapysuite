@@ -36,6 +36,7 @@ The radio client supports the following commands
 over the control channel:
 
 ```
+i          # probe detailed radio device information
 a true     # enable or disable automatic gain control
 g xxx.x    # set gain of the radio
 r xxxxx    # set the sampling rate of the radio in Hertz
