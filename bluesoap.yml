@@ -372,27 +372,27 @@
         X2FyZ3VtZW50KCItLWtlZXBhbGl2ZSIsIGRlZmF1bHQ9NjAsIGhlbHA9J2Jy
         b2tlciBrZWVwIGFsaXZlJykKcGFyc2VyLmFkZF9hcmd1bWVudCgiLS1wcHMt
         dG9waWMiLCBkZWZhdWx0PSJwcHMiLCBoZWxwPSdQUFMgdG9waWMnKQoKZGVm
-        IGdlbl90b3BpYyhuYW1lPU5vbmUpOgogICAgZCA9IGFyZ3MudG9waWMuc3Bs
-        aXQoJy8nKVs6LTFdCiAgICBpZiBuYW1lIGlzIG5vdCBOb25lOgogICAgICAg
-        IGQuYXBwZW5kKG5hbWUpCiAgICByZXR1cm4gJy8nLmpvaW4oZCkKCmRlZiBv
-        bl9jb25uZWN0KGNsaWVudCwgdXNlcmRhdGEsIGZsYWdzLCByYyk6CiAgICBj
-        bGllbnQuc3Vic2NyaWJlKGdlbl90b3BpYygnIycpKQoKZGVmIG9uX21lc3Nh
-        Z2UoY2xpZW50LCB1c2VyZGF0YSwgbXNnKToKICAgIHBheWxvYWQgPSBtc2cu
-        cGF5bG9hZC5kZWNvZGUoJ2xhdGluJykuc3RyaXAoKQogICAgaWYgbXNnLnRv
-        cGljID09IGFyZ3MucHBzX3RvcGljOgogICAgICAgIHByaW50KGYne21zZy50
-        b3BpY30ge3BheWxvYWR9JykKCmRlZiBtYWluKCk6CiAgICBjbGllbnQgPSBt
-        cXR0LkNsaWVudCgpCiAgICBjbGllbnQub25fY29ubmVjdCA9IG9uX2Nvbm5l
-        Y3QKICAgIGNsaWVudC5vbl9tZXNzYWdlID0gb25fbWVzc2FnZQogICAgY2xp
-        ZW50LmNvbm5lY3QoYXJncy5icm9rZXIsIGFyZ3MucG9ydCwgYXJncy5rZWVw
-        YWxpdmUpCiAgICBjbGllbnQubG9vcF9zdGFydCgpCiAgICBtb2RlID0gV0FU
-        Q0hfRU5BQkxFIHwgV0FUQ0hfTkVXU1RZTEUKICAgIHNlc3Npb24gPSBncHMo
-        bW9kZT1tb2RlKQogICAgZm9yIG54IGluIHNlc3Npb246CiAgICAgICAgaWYg
-        bnhbJ2NsYXNzJ10gPT0gJ1RQVic6CiAgICAgICAgICAgIG1vZGUgPSBueFsn
-        bW9kZSddCiAgICAgICAgICAgIHRzID0gbnguZ2V0KCd0aW1lJykKICAgICAg
-        ICAgICAgaWYgdHMgYW5kIChtb2RlID09IDIgb3IgbW9kZSA9PSAzKToKICAg
-        ICAgICAgICAgICAgIGNsaWVudC5wdWJsaXNoKGFyZ3MucHBzX3RvcGljLCB0
-        cykgCgppZiBfX25hbWVfXyA9PSAnX19tYWluX18nOgogICAgYXJncyA9IHBh
-        cnNlci5wYXJzZV9hcmdzKCkKICAgIG1haW4oKQoKCg==
+        IGdlbl90b3BpYyhuYW1lPU5vbmUpOgogICAgZCA9IGFyZ3MucHBzX3RvcGlj
+        LnNwbGl0KCcvJylbOi0xXQogICAgaWYgbmFtZSBpcyBub3QgTm9uZToKICAg
+        ICAgICBkLmFwcGVuZChuYW1lKQogICAgcmV0dXJuICcvJy5qb2luKGQpCgpk
+        ZWYgb25fY29ubmVjdChjbGllbnQsIHVzZXJkYXRhLCBmbGFncywgcmMpOgog
+        ICAgY2xpZW50LnN1YnNjcmliZShnZW5fdG9waWMoJyMnKSkKCmRlZiBvbl9t
+        ZXNzYWdlKGNsaWVudCwgdXNlcmRhdGEsIG1zZyk6CiAgICBwYXlsb2FkID0g
+        bXNnLnBheWxvYWQuZGVjb2RlKCdsYXRpbicpLnN0cmlwKCkKICAgIGlmIG1z
+        Zy50b3BpYyA9PSBhcmdzLnBwc190b3BpYzoKICAgICAgICBwcmludChmJ3tt
+        c2cudG9waWN9IHtwYXlsb2FkfScpCgpkZWYgbWFpbigpOgogICAgY2xpZW50
+        ID0gbXF0dC5DbGllbnQoKQogICAgY2xpZW50Lm9uX2Nvbm5lY3QgPSBvbl9j
+        b25uZWN0CiAgICBjbGllbnQub25fbWVzc2FnZSA9IG9uX21lc3NhZ2UKICAg
+        IGNsaWVudC5jb25uZWN0KGFyZ3MuYnJva2VyLCBhcmdzLnBvcnQsIGFyZ3Mu
+        a2VlcGFsaXZlKQogICAgY2xpZW50Lmxvb3Bfc3RhcnQoKQogICAgbW9kZSA9
+        IFdBVENIX0VOQUJMRSB8IFdBVENIX05FV1NUWUxFCiAgICBzZXNzaW9uID0g
+        Z3BzKG1vZGU9bW9kZSkKICAgIGZvciBueCBpbiBzZXNzaW9uOgogICAgICAg
+        IGlmIG54WydjbGFzcyddID09ICdUUFYnOgogICAgICAgICAgICBtb2RlID0g
+        bnhbJ21vZGUnXQogICAgICAgICAgICB0cyA9IG54LmdldCgndGltZScpCiAg
+        ICAgICAgICAgIGlmIHRzIGFuZCAobW9kZSA9PSAyIG9yIG1vZGUgPT0gMyk6
+        CiAgICAgICAgICAgICAgICBjbGllbnQucHVibGlzaChhcmdzLnBwc190b3Bp
+        YywgdHMpIAoKaWYgX19uYW1lX18gPT0gJ19fbWFpbl9fJzoKICAgIGFyZ3Mg
+        PSBwYXJzZXIucGFyc2VfYXJncygpCiAgICBtYWluKCkKCgo=
 
 
   - become: yes
