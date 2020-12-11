@@ -1,0 +1,145 @@
+---
+  # apt
+
+  - become: yes
+    apt:
+      name:
+      - python3-dbus
+      - mosquitto
+
+  # pip
+
+  - become: yes
+    pip:
+      name:
+      - bluezero
+      - paho-mqtt
+
+  # ble
+
+  - become: yes
+    copy:
+      dest: /etc/dbus-1/system.d/ukBaz.bluezero.conf 
+      content: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE busconfig PUBLIC 
+         "-//freedesktop//DTD D-BUS Bus Configuration 1.0//EN"
+         "http://www.freedesktop.org/standards/dbus/1.0/busconfig.dtd">
+        <busconfig>
+          <policy context="default">
+            <allow own="ukBaz.bluezero"/>
+            <allow send_destination="ukBaz.bluezero"
+                   send_interface="org.freedesktop.DBus.Introspectable"/>
+            <allow send_type="method_call" log="true"/>
+          </policy>
+        </busconfig>
+
+  # code
+
+  - become: yes
+    copy:
+      mode: 0755
+      dest: /usr/local/bin/mqblue
+      content: !!binary |
+        IyEvdXNyL2Jpbi9weXRob24zCmZyb20gYmx1ZXplcm8gaW1wb3J0IHBlcmlw
+        aGVyYWwKClVBUlRfU0VSSVZDRSA9ICc2RTQwMDAwMS1CNUEzLUYzOTMtRTBB
+        OS1FNTBFMjREQ0NBOUUnClJYX0NIQVJBQ1RFUklTVElDID0gJzZFNDAwMDAy
+        LUI1QTMtRjM5My1FMEE5LUU1MEUyNERDQ0E5RScKVFhfQ0hBUkFDVEVSSVNU
+        SUMgPSAnNkU0MDAwMDMtQjVBMy1GMzkzLUUwQTktRTUwRTI0RENDQTlFJwoK
+        Y2xhc3MgVWFydFNlcnZpY2U6CiAgICBkZWYgX19pbml0X18oc2VsZiwgb25y
+        ZWFkLCBhbGlhcz0nUlBpX1VBUlQnKToKICAgICAgICBzZWxmLm9ucmVhZCA9
+        IG9ucmVhZAogICAgICAgIHNlbGYuYXBwID0gcGVyaXBoZXJhbC5BcHBsaWNh
+        dGlvbigpCiAgICAgICAgc2VsZi5ibGVfdWFydCA9IHBlcmlwaGVyYWwuU2Vy
+        dmljZShVQVJUX1NFUklWQ0UsIFRydWUpCiAgICAgICAgc2VsZi5yeF91YXJ0
+        ID0gcGVyaXBoZXJhbC5DaGFyYWN0ZXJpc3RpYyhSWF9DSEFSQUNURVJJU1RJ
+        QywKICAgICAgICAgICAgWyd3cml0ZScsICd3cml0ZS13aXRob3V0LXJlc3Bv
+        bnNlJ10sIHNlbGYuYmxlX3VhcnQpCiAgICAgICAgc2VsZi50eF91YXJ0ID0g
+        cGVyaXBoZXJhbC5DaGFyYWN0ZXJpc3RpYyhUWF9DSEFSQUNURVJJU1RJQywK
+        ICAgICAgICAgICAgWydub3RpZnknXSwgc2VsZi5ibGVfdWFydCkKICAgICAg
+        ICBzZWxmLnJ4X3VhcnQuYWRkX3dyaXRlX2V2ZW50KHNlbGYudWFydF9wcmlu
+        dCkKICAgICAgICBzZWxmLmJsZV91YXJ0LmFkZF9jaGFyYWN0ZXJpc3RpYyhz
+        ZWxmLnJ4X3VhcnQpCiAgICAgICAgc2VsZi5ibGVfdWFydC5hZGRfY2hhcmFj
+        dGVyaXN0aWMoc2VsZi50eF91YXJ0KQogICAgICAgIHNlbGYuYXBwLmFkZF9z
+        ZXJ2aWNlKHNlbGYuYmxlX3VhcnQpCiAgICAgICAgc2VsZi5hcHAuZG9uZ2xl
+        LmFsaWFzID0gYWxpYXMKICAgIGRlZiB1YXJ0X3ByaW50KHNlbGYsIGRhdGEp
+        OgogICAgICAgIHZhbHVlID0gJycuam9pbihjaHIobGV0dGVyKSBmb3IgbGV0
+        dGVyIGluIGRhdGEpCiAgICAgICAgc2VsZi5vbnJlYWQodmFsdWUpCiAgICBk
+        ZWYgc3RhcnQoc2VsZik6CiAgICAgICAgc2VsZi5hcHAuc3RhcnQoKQoKIyMj
+        IyMjIyMjIyMjIyMjIyMjIyMjIwoKaW1wb3J0IGFyZ3BhcnNlCmltcG9ydCBw
+        YWhvLm1xdHQuY2xpZW50IGFzIG1xdHQKZnJvbSBkYXRldGltZSBpbXBvcnQg
+        ZGF0ZXRpbWUKCnBhcnNlciA9IGFyZ3BhcnNlLkFyZ3VtZW50UGFyc2VyKAog
+        ICAgZm9ybWF0dGVyX2NsYXNzPWFyZ3BhcnNlLkFyZ3VtZW50RGVmYXVsdHNI
+        ZWxwRm9ybWF0dGVyKQpwYXJzZXIuYWRkX2FyZ3VtZW50KCItLWJyb2tlciIs
+        IGRlZmF1bHQ9IjEyNy4wLjAuMSIsIGhlbHA9J2Jyb2tlciBob3N0JykKcGFy
+        c2VyLmFkZF9hcmd1bWVudCgiLS1wb3J0IiwgZGVmYXVsdD0xODgzLCBoZWxw
+        PSdicm9rZXIgcG9ydCcpCnBhcnNlci5hZGRfYXJndW1lbnQoIi0ta2VlcGFs
+        aXZlIiwgZGVmYXVsdD02MCwgaGVscD0nYnJva2VyIGtlZXAgYWxpdmUnKQpw
+        YXJzZXIuYWRkX2FyZ3VtZW50KCItLXRvcGljIiwgZGVmYXVsdD0iZi90eCIs
+        IGhlbHA9J2NvbW1hbmQgdG9waWMnKQoKZGVmIG1haW4oKToKICAgIGRlZiBv
+        bmNvbm5lY3QoY2xpZW50LCB1c2VyZGF0YSwgZmxhZ3MsIHJjKToKICAgICAg
+        ICBjbGllbnQuc3Vic2NyaWJlKCcjJykKICAgIGRlZiBvbndyaXRlKHZhbHVl
+        KToKICAgICAgICBjbGllbnQucHVibGlzaChhcmdzLnRvcGljLCB2YWx1ZSkK
+        ICAgIGRlZiBvbm1lc3NhZ2UoY2xpZW50LCB1c2VyZGF0YSwgbXNnKToKICAg
+        ICAgICBwYXlsb2FkID0gbXNnLnBheWxvYWQuZGVjb2RlKCdsYXRpbicpCiAg
+        ICAgICAgdHMgPSBkYXRldGltZS5ub3coKS5zdHJmdGltZSgnJUg6JU06JVMn
+        KQogICAgICAgIHVhcnQudHhfdWFydC5zZW5kX25vdGlmeV9ldmVudChmJ3t0
+        c30ge21zZy50b3BpY30ge3BheWxvYWR9JykKICAgIHVhcnQgPSBVYXJ0U2Vy
+        dmljZShvbndyaXRlKQogICAgY2xpZW50ID0gbXF0dC5DbGllbnQoKQogICAg
+        Y2xpZW50Lm9uX2Nvbm5lY3QgPSBvbmNvbm5lY3QKICAgIGNsaWVudC5vbl9t
+        ZXNzYWdlID0gb25tZXNzYWdlCiAgICBjbGllbnQuY29ubmVjdChhcmdzLmJy
+        b2tlciwgYXJncy5wb3J0LCBhcmdzLmtlZXBhbGl2ZSkKICAgIGNsaWVudC5s
+        b29wX3N0YXJ0KCkKICAgIHVhcnQuc3RhcnQoKQoKaWYgX19uYW1lX18gPT0g
+        J19fbWFpbl9fJzoKICAgICMgcHJveHkgYmxlIHVhcnQgdG8gbXF0dCBicm9r
+        ZXIKICAgICMgdGhpcyBuZWVkcyB0byBydW4gYXMgcm9vdAogICAgYXJncyA9
+        IHBhcnNlci5wYXJzZV9hcmdzKCkKICAgIG1haW4oKQoK
+
+
+  - become: yes
+    copy:
+      mode: 0755
+      dest: /usr/local/bin/mqclient
+      content: !!binary |
+        IyEvdXNyL2Jpbi9weXRob24zCgppbXBvcnQgc3lzCmltcG9ydCBhcmdwYXJz
+        ZQppbXBvcnQgcGFoby5tcXR0LmNsaWVudCBhcyBtcXR0CgpwYXJzZXIgPSBh
+        cmdwYXJzZS5Bcmd1bWVudFBhcnNlcigKICAgIGZvcm1hdHRlcl9jbGFzcz1h
+        cmdwYXJzZS5Bcmd1bWVudERlZmF1bHRzSGVscEZvcm1hdHRlcikKcGFyc2Vy
+        LmFkZF9hcmd1bWVudCgiLS1icm9rZXIiLCBkZWZhdWx0PSIxMjcuMC4wLjEi
+        LCBoZWxwPSdicm9rZXIgaG9zdCcpCnBhcnNlci5hZGRfYXJndW1lbnQoIi0t
+        cG9ydCIsIGRlZmF1bHQ9MTg4MywgaGVscD0nYnJva2VyIHBvcnQnKQpwYXJz
+        ZXIuYWRkX2FyZ3VtZW50KCItLWtlZXBhbGl2ZSIsIGRlZmF1bHQ9NjAsIGhl
+        bHA9J2Jyb2tlciBrZWVwIGFsaXZlJykKcGFyc2VyLmFkZF9hcmd1bWVudCgi
+        LS10b3BpYyIsIGRlZmF1bHQ9ImYvdHgiLCBoZWxwPSdjb21tYW5kIHRvcGlj
+        JykKCmRlZiBvbl9jb25uZWN0KGNsaWVudCwgdXNlcmRhdGEsIGZsYWdzLCBy
+        Yyk6CiAgICBjbGllbnQuc3Vic2NyaWJlKCIjIikKCmRlZiBvbl9tZXNzYWdl
+        KGNsaWVudCwgdXNlcmRhdGEsIG1zZyk6CiAgICBwcmludChtc2cudG9waWMg
+        KyAiICIgKyBtc2cucGF5bG9hZC5kZWNvZGUoJ2xhdGluJykpCgpkZWYgbWFp
+        bigpOgogICAgY2xpZW50ID0gbXF0dC5DbGllbnQoKQogICAgY2xpZW50Lm9u
+        X2Nvbm5lY3QgPSBvbl9jb25uZWN0CiAgICBjbGllbnQub25fbWVzc2FnZSA9
+        IG9uX21lc3NhZ2UKICAgIGNsaWVudC5jb25uZWN0KGFyZ3MuYnJva2VyLCBh
+        cmdzLnBvcnQsIGFyZ3Mua2VlcGFsaXZlKQogICAgY2xpZW50Lmxvb3Bfc3Rh
+        cnQoKQogICAgd2hpbGUgVHJ1ZToKICAgICAgICBsaW5lID0gbmV4dChzeXMu
+        c3RkaW4pLnJzdHJpcCgpCiAgICAgICAgY2xpZW50LnB1Ymxpc2goYXJncy50
+        b3BpYywgbGluZSkgCgppZiBfX25hbWVfXyA9PSAnX19tYWluX18nOgogICAg
+        YXJncyA9IHBhcnNlci5wYXJzZV9hcmdzKCkKICAgIG1haW4oKQoKCg==
+
+
+
+  # output directory
+
+  - become: yes
+    copy:
+      dest: /lib/systemd/system/mqblue.service
+      content: |
+        [Service]
+        ExecStart=/usr/bin/python3 -u /usr/local/bin/mqblue
+        Restart=on-failure
+        RestartSec=10s
+        [Install]
+        WantedBy=multi-user.target
+
+  - become: yes
+    shell: |
+      sudo systemctl enable mqblue
+      sudo systemctl restart mqblue
+
+

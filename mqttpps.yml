@@ -1,0 +1,76 @@
+---
+
+  # apt
+
+  - become: yes
+    apt:
+      name:
+      - mosquitto
+
+  # pip
+
+  - become: yes
+    pip:
+      name:
+      - gps
+      - paho-mqtt
+
+  # mqpps
+
+  - become: yes
+    copy:
+      mode: 0755
+      dest: /usr/local/bin/mqpps
+      content: !!binary |
+        IyEvdXNyL2Jpbi9weXRob24zCgppbXBvcnQgYXJncGFyc2UKaW1wb3J0IHBh
+        aG8ubXF0dC5jbGllbnQgYXMgbXF0dApmcm9tIGdwcyBpbXBvcnQgZ3BzLCBX
+        QVRDSF9FTkFCTEUsIFdBVENIX05FV1NUWUxFCgpwYXJzZXIgPSBhcmdwYXJz
+        ZS5Bcmd1bWVudFBhcnNlcigKICAgIGZvcm1hdHRlcl9jbGFzcz1hcmdwYXJz
+        ZS5Bcmd1bWVudERlZmF1bHRzSGVscEZvcm1hdHRlcikKcGFyc2VyLmFkZF9h
+        cmd1bWVudCgiLS1icm9rZXIiLCBkZWZhdWx0PSIxMjcuMC4wLjEiLCBoZWxw
+        PSdicm9rZXIgaG9zdCcpCnBhcnNlci5hZGRfYXJndW1lbnQoIi0tcG9ydCIs
+        IGRlZmF1bHQ9MTg4MywgaGVscD0nYnJva2VyIHBvcnQnKQpwYXJzZXIuYWRk
+        X2FyZ3VtZW50KCItLWtlZXBhbGl2ZSIsIGRlZmF1bHQ9NjAsIGhlbHA9J2Jy
+        b2tlciBrZWVwIGFsaXZlJykKcGFyc2VyLmFkZF9hcmd1bWVudCgiLS1wcHMt
+        dG9waWMiLCBkZWZhdWx0PSJwcHMiLCBoZWxwPSdQUFMgdG9waWMnKQoKZGVm
+        IGdlbl90b3BpYyhuYW1lPU5vbmUpOgogICAgZCA9IGFyZ3MucHBzX3RvcGlj
+        LnNwbGl0KCcvJylbOi0xXQogICAgaWYgbmFtZSBpcyBub3QgTm9uZToKICAg
+        ICAgICBkLmFwcGVuZChuYW1lKQogICAgcmV0dXJuICcvJy5qb2luKGQpCgpk
+        ZWYgb25fY29ubmVjdChjbGllbnQsIHVzZXJkYXRhLCBmbGFncywgcmMpOgog
+        ICAgY2xpZW50LnN1YnNjcmliZShnZW5fdG9waWMoJyMnKSkKCmRlZiBvbl9t
+        ZXNzYWdlKGNsaWVudCwgdXNlcmRhdGEsIG1zZyk6CiAgICBwYXlsb2FkID0g
+        bXNnLnBheWxvYWQuZGVjb2RlKCdsYXRpbicpLnN0cmlwKCkKICAgIGlmIG1z
+        Zy50b3BpYyA9PSBhcmdzLnBwc190b3BpYzoKICAgICAgICBwcmludChmJ3tt
+        c2cudG9waWN9IHtwYXlsb2FkfScpCgpkZWYgbWFpbigpOgogICAgY2xpZW50
+        ID0gbXF0dC5DbGllbnQoKQogICAgY2xpZW50Lm9uX2Nvbm5lY3QgPSBvbl9j
+        b25uZWN0CiAgICBjbGllbnQub25fbWVzc2FnZSA9IG9uX21lc3NhZ2UKICAg
+        IGNsaWVudC5jb25uZWN0KGFyZ3MuYnJva2VyLCBhcmdzLnBvcnQsIGFyZ3Mu
+        a2VlcGFsaXZlKQogICAgY2xpZW50Lmxvb3Bfc3RhcnQoKQogICAgbW9kZSA9
+        IFdBVENIX0VOQUJMRSB8IFdBVENIX05FV1NUWUxFCiAgICBzZXNzaW9uID0g
+        Z3BzKG1vZGU9bW9kZSkKICAgIGZvciBueCBpbiBzZXNzaW9uOgogICAgICAg
+        IGlmIG54WydjbGFzcyddID09ICdUUFYnOgogICAgICAgICAgICBtb2RlID0g
+        bnhbJ21vZGUnXQogICAgICAgICAgICB0cyA9IG54LmdldCgndGltZScpCiAg
+        ICAgICAgICAgIGlmIHRzIGFuZCAobW9kZSA9PSAyIG9yIG1vZGUgPT0gMyk6
+        CiAgICAgICAgICAgICAgICBjbGllbnQucHVibGlzaChhcmdzLnBwc190b3Bp
+        YywgdHMpIAoKaWYgX19uYW1lX18gPT0gJ19fbWFpbl9fJzoKICAgIGFyZ3Mg
+        PSBwYXJzZXIucGFyc2VfYXJncygpCiAgICBtYWluKCkKCgo=
+
+
+
+  - become: yes
+    copy:
+      dest: /lib/systemd/system/mqpps.service
+      content: |
+        [Service]
+        ExecStart=/usr/bin/python3 -u /usr/local/bin/mqpps
+        Restart=on-failure
+        RestartSec=10s
+        [Install]
+        WantedBy=multi-user.target
+
+  - become: yes
+    shell: |
+      sudo systemctl enable mqpps
+      sudo systemctl restart mqpps
+
+
