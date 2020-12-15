@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import os, sys, time
+import socket
 import struct
 import argparse
 import numpy as np
@@ -14,32 +15,46 @@ restart_seconds = 10
 parser = argparse.ArgumentParser(
     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
+# broker
 parser.add_argument("--broker", default="127.0.0.1", help='broker host')
-parser.add_argument("--port", default=1883, type=int, help='broker port')
-parser.add_argument("--keepalive", default=60, type=int, help='broker keepalive in seconds')
+parser.add_argument("--broker-port", default=1883, type=int, help='broker port')
+parser.add_argument("--broker-keepalive", default=60, type=int, help='broker keepalive seconds')
 parser.add_argument("--topic", default="f/tx", help='mqtt topic for command')
 parser.add_argument("--pps-topic", default="pps", help='mqtt topic for gps pps time')
+parser.add_argument("--nobroker", action="store_true", help="disable mqtt broker")
+parser.add_argument("--refresh-pps", default=10, type=int, help='pps refresh in seconds')
+
+# soapy
 parser.add_argument("--driver", help='name of driver')
 parser.add_argument("--packet-size", default=1024, type=int, help='packet size')
 parser.add_argument("--freq", type=np.float, help="center frequency in hertz")
 parser.add_argument("--rate", type=np.float, help="sample rate in hertz")
 parser.add_argument("--gain", type=np.float, help="front end gain in dB")
 parser.add_argument("--agc", action="store_true", help="enable AGC")
-parser.add_argument("--nobroker", action="store_true", help="disable mqtt broker")
-parser.add_argument("--dumb", action="store_true", help="dumb terminal")
-parser.add_argument("--output", default="out", help="write CF32 samples to file")
-parser.add_argument("--nowave", action="store_true", help="disable WAV header")
-parser.add_argument("--meter", action="store_true", help="enable console peak meter")
-parser.add_argument("--pause", action="store_true", help="pause output")
-parser.add_argument("--refresh", default=5, type=int, help="peak meter refresh in seconds")
-parser.add_argument("--refresh-pps", default=10, type=int, help='pps refresh in seconds')
- 
-# argString
+
+# soapy argString
 parser.add_argument("--direct-samp", help="0=off, 1 or i=I, 2 or q=Q channel")
 parser.add_argument("--iq-swap", action="store_true", help="swap IQ signals")
 parser.add_argument("--biastee", action="store_true", help="enable bias tee")
 parser.add_argument("--digital-agc", action="store_true", help="enable digital AGC")
 parser.add_argument("--offset-tune", action="store_true", help="enable offset tune")
+
+# other
+parser.add_argument("--output", default="out", help="write CF32 samples to file")
+parser.add_argument("--nowave", action="store_true", help="disable WAV header")
+parser.add_argument("--pause", action="store_true", help="pause output")
+
+# peak meter
+parser.add_argument("--refresh", default=5, type=int, help="peak meter refresh in seconds")
+parser.add_argument("--meter", action="store_true", help="enable console peak meter")
+parser.add_argument("--dumb", action="store_true", help="enable dumb terminal console")
+ 
+# tcp server
+parser.add_argument("--host", default="127.0.0.1", help="CF32 tcp server host address")
+parser.add_argument("--port", type=int, default=1234, help="CF32 tcp server port address")
+parser.add_argument("--rtltcp", action="store_true", help="enable CU8 rtltcp server mode")
+parser.add_argument("--noserver", action="store_true", help="disable tcp server")
+
 
 
 def gen_topic(name=None):
@@ -286,7 +301,7 @@ def broker_init():
         broker = mqtt.Client()
         broker.on_connect = on_connect
         broker.on_message = on_message
-        broker.connect(args.broker, args.port, args.keepalive)
+        broker.connect(args.broker, args.broker_port, args.broker_keepalive)
         broker.loop_start()
 
 
@@ -346,11 +361,63 @@ def radio_peak(peak_level):
         broker.publish(gen_topic("peak"), db)
 
 
+###############3
+
+sock_list = []
+sock_server= None
+
+def open_conn(self, sock, client_address):
+    sock_list.append(sock)
+
+
+def close_conn(sock):
+    sock_list.remove(sock)
+    sock.close()
+
+
+def tcp_server(data):
+    if args.rtlsdr:
+        data = (data * 128 + 128).astype('B')
+    readable, writable, exceptional = select.select(sock_list, sock_list, sock_list, 0)
+    for sock in outsocks:
+        if sock in exceptional:
+            close_conn(sock)
+    for sock in outsocks:
+        if sock in writable:
+            try:
+                sock.sendall(data)
+            except OSError:
+                close_conn(sock)
+    for sock in insocks:
+        if sock in readable:
+            if sock == sock_server:
+                conn, client_address = sock.accept()
+                open_conn(conn, client_address)
+                if not args.float:
+                    tuner_number = 5 # R820T
+                    tuner_gains = 29 # R820T
+                    dongle_info = struct.pack('>4sII', b'RTL0', tuner_number, tuner_gains)
+                    conn.sendall(dongle_info)
+            else:
+                sock.recv(4096)
+
+
+def init_server(self):
+    global sock_server, sock_list
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    sock.bind((args.host, args.port))
+    sock.listen()
+    sock_list = [ sock ]
+    sock_server = sock
+
+
 def radio_start():
     global rate, timefile, samples_total
+    if not args.noserver: 
+        init_server()
     rate = radio.getSampleRate(SOAPY_SDR_RX, 0)
-    size = args.packet_size
-    data = np.array([0] * size * 2, np.float32)
+    data = np.array([0] * args.packet_size * 2, np.float32)
     stream = radio.setupStream(SOAPY_SDR_RX, SOAPY_SDR_CF32)
     radio.activateStream(stream) 
     samples_total = 0
@@ -359,14 +426,18 @@ def radio_start():
     outfile = None
     try:
         while not killed and not fatal:
-            radio.readStream(stream, [data], size)
+            radio.readStream(stream, [data], args.packet_size)
             if not paused:
                 if not outfile:
                     outfile, timefile = open_files()
-                samples_total += size
+                samples_total += args.packet_size
                 outfile.write(data)
+            if not args.noserver:
+                tcp_server(data)
+
+            # peak meter
             peak_level = max(peak_level, abs(data.min()), abs(data.max()))
-            sample_num += size
+            sample_num += args.packet_size
             if sample_num > rate * args.refresh:
                 radio_peak(peak_level)
                 peak_level = 0

@@ -26,9 +26,9 @@ is a Python program that uses the SoapySDR library to capture the SDR radio
 stream and write the result to a file as either
 a wav sound file or a raw file.
 
-There is no TCP/network server port provided to monitor
-the stream.  Only a peak dBFS reading is sent to
-the MQTT queue.  This way the radio levels can
+A TCP/network server is also provided for listening to
+the stream.  In addition a peak dBFS reading is sent to the 
+MQTT queue.  This way the radio levels can
 be checked and the gain of the radio adjusted
 using the radio's MQTT control (topic) channel. 
 

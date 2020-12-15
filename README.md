@@ -9,9 +9,9 @@ is a Python program that uses the SoapySDR library to capture the SDR radio
 stream and write the result to a file as either
 a wav sound file or a raw file.
 
-There is no TCP/network server port provided to monitor
-the stream.  Only a peak dBFS reading is sent to
-the MQTT queue.  This way the radio levels can
+A TCP/network server is also provided for listening to
+the stream.  In addition a peak dBFS reading is sent to the 
+MQTT queue.  This way the radio levels can
 be checked and the gain of the radio adjusted
 using the radio's MQTT control (topic) channel. 
 
@@ -54,24 +54,30 @@ it.  The name of the radio client application is "mqsoapy".
 
 ```
 $ python3 mqsoapy.py --help
-usage: mqsoapy.py [-h] [--broker BROKER] [--port PORT] [--keepalive KEEPALIVE]
-                  [--topic TOPIC] [--pps-topic PPS_TOPIC] [--driver DRIVER]
+usage: mqsoapy.py [-h] [--broker BROKER] [--broker-port BROKER_PORT]
+                  [--broker-keepalive BROKER_KEEPALIVE] [--topic TOPIC]
+                  [--pps-topic PPS_TOPIC] [--nobroker]
+                  [--refresh-pps REFRESH_PPS] [--driver DRIVER]
                   [--packet-size PACKET_SIZE] [--freq FREQ] [--rate RATE]
-                  [--gain GAIN] [--agc] [--nobroker] [--dumb]
-                  [--output OUTPUT] [--nowave] [--meter] [--pause]
-                  [--refresh REFRESH] [--refresh-pps REFRESH_PPS]
-                  [--direct-samp DIRECT_SAMP] [--iq-swap] [--biastee]
-                  [--digital-agc] [--offset-tune]
+                  [--gain GAIN] [--agc] [--direct-samp DIRECT_SAMP]
+                  [--iq-swap] [--biastee] [--digital-agc] [--offset-tune]
+                  [--output OUTPUT] [--nowave] [--pause] [--refresh REFRESH]
+                  [--meter] [--dumb] [--host HOST] [--port PORT] [--rtltcp]
+                  [--noserver]
 
 optional arguments:
   -h, --help            show this help message and exit
   --broker BROKER       broker host (default: 127.0.0.1)
-  --port PORT           broker port (default: 1883)
-  --keepalive KEEPALIVE
-                        broker keepalive in seconds (default: 60)
+  --broker-port BROKER_PORT
+                        broker port (default: 1883)
+  --broker-keepalive BROKER_KEEPALIVE
+                        broker keepalive seconds (default: 60)
   --topic TOPIC         mqtt topic for command (default: f/tx)
   --pps-topic PPS_TOPIC
                         mqtt topic for gps pps time (default: pps)
+  --nobroker            disable mqtt broker (default: False)
+  --refresh-pps REFRESH_PPS
+                        pps refresh in seconds (default: 10)
   --driver DRIVER       name of driver (default: None)
   --packet-size PACKET_SIZE
                         packet size (default: 1024)
@@ -79,21 +85,22 @@ optional arguments:
   --rate RATE           sample rate in hertz (default: None)
   --gain GAIN           front end gain in dB (default: None)
   --agc                 enable AGC (default: False)
-  --nobroker            disable mqtt broker (default: False)
-  --dumb                dumb terminal (default: False)
-  --output OUTPUT       write CF32 samples to file (default: out)
-  --nowave              disable WAV header (default: False)
-  --meter               enable console peak meter (default: False)
-  --pause               pause output (default: False)
-  --refresh REFRESH     peak meter refresh in seconds (default: 5)
-  --refresh-pps REFRESH_PPS
-                        pps refresh in seconds (default: 10)
   --direct-samp DIRECT_SAMP
                         0=off, 1 or i=I, 2 or q=Q channel (default: None)
   --iq-swap             swap IQ signals (default: False)
   --biastee             enable bias tee (default: False)
   --digital-agc         enable digital AGC (default: False)
   --offset-tune         enable offset tune (default: False)
+  --output OUTPUT       write CF32 samples to file (default: out)
+  --nowave              disable WAV header (default: False)
+  --pause               pause output (default: False)
+  --refresh REFRESH     peak meter refresh in seconds (default: 5)
+  --meter               enable console peak meter (default: False)
+  --dumb                enable dumb terminal console (default: False)
+  --host HOST           CF32 tcp server host address (default: 127.0.0.1)
+  --port PORT           CF32 tcp server port address (default: 1234)
+  --rtltcp              enable CU8 rtltcp server mode (default: False)
+  --noserver            disable tcp server (default: False)
 ```
 
 
