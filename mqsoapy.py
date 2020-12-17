@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import os, sys, time
-import socket
+import socket, select
 import struct
 import argparse
 import numpy as np
@@ -303,6 +303,7 @@ def broker_init():
         broker.on_message = on_message
         broker.connect(args.broker, args.broker_port, args.broker_keepalive)
         broker.loop_start()
+    info('Initializing')
 
 
 def main():
@@ -361,12 +362,13 @@ def radio_peak(peak_level):
         broker.publish(gen_topic("peak"), db)
 
 
-###############3
+###############
 
 sock_list = []
 sock_server= None
 
-def open_conn(self, sock, client_address):
+
+def open_conn(sock, client_address):
     sock_list.append(sock)
 
 
@@ -375,20 +377,25 @@ def close_conn(sock):
     sock.close()
 
 
+def close_server():
+    for sock in sock_list:
+        sock.close()
+
+
 def tcp_server(data):
-    if args.rtlsdr:
+    if args.rtltcp:
         data = (data * 128 + 128).astype('B')
     readable, writable, exceptional = select.select(sock_list, sock_list, sock_list, 0)
-    for sock in outsocks:
+    for sock in sock_list:
         if sock in exceptional:
             close_conn(sock)
-    for sock in outsocks:
+    for sock in sock_list:
         if sock in writable:
             try:
                 sock.sendall(data)
             except OSError:
                 close_conn(sock)
-    for sock in insocks:
+    for sock in sock_list:
         if sock in readable:
             if sock == sock_server:
                 conn, client_address = sock.accept()
@@ -402,7 +409,7 @@ def tcp_server(data):
                 sock.recv(4096)
 
 
-def init_server(self):
+def init_server():
     global sock_server, sock_list
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -444,6 +451,8 @@ def radio_start():
                 sample_num = 0
     except (KeyboardInterrupt, SystemError) as e:
         info(f"Exception radio_start(): {e}")
+    if not args.noserver: 
+        close_server()
     close_file(outfile, "audio")
     timefile = close_file(timefile, "time")
     close_stream(stream)
