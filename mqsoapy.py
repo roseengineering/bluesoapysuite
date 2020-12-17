@@ -16,7 +16,7 @@ parser = argparse.ArgumentParser(
     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
 # broker
-parser.add_argument("--broker", default="127.0.0.1", help='broker host')
+parser.add_argument("--broker", default="0.0.0.0", help='broker host')
 parser.add_argument("--broker-port", default=1883, type=int, help='broker port')
 parser.add_argument("--broker-keepalive", default=60, type=int, help='broker keepalive seconds')
 parser.add_argument("--topic", default="f/tx", help='mqtt topic for command')
@@ -50,7 +50,7 @@ parser.add_argument("--meter", action="store_true", help="enable console peak me
 parser.add_argument("--dumb", action="store_true", help="enable dumb terminal console")
  
 # tcp server
-parser.add_argument("--host", default="127.0.0.1", help="CF32 tcp server host address")
+parser.add_argument("--host", default="0.0.0.0", help="CF32 tcp server host address")
 parser.add_argument("--port", type=int, default=1234, help="CF32 tcp server port address")
 parser.add_argument("--rtltcp", action="store_true", help="enable CU8 rtltcp server mode")
 parser.add_argument("--noserver", action="store_true", help="disable tcp server")
@@ -70,7 +70,8 @@ def to_float(param):
     except ValueError:
         pass
 
-###
+
+############
 
 def on_info(param):
     chan = 0
@@ -216,8 +217,7 @@ def on_connect(client, userdata, flags, rc):
     client.subscribe(args.pps_topic)
 
 
-###############3
-
+###############
 
 def info(payload):
     print(payload, file=sys.stderr)
@@ -400,7 +400,7 @@ def tcp_server(data):
             if sock == sock_server:
                 conn, client_address = sock.accept()
                 open_conn(conn, client_address)
-                if not args.float:
+                if args.rtltcp:
                     tuner_number = 5 # R820T
                     tuner_gains = 29 # R820T
                     dongle_info = struct.pack('>4sII', b'RTL0', tuner_number, tuner_gains)

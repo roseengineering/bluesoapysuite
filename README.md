@@ -67,7 +67,7 @@ usage: mqsoapy.py [-h] [--broker BROKER] [--broker-port BROKER_PORT]
 
 optional arguments:
   -h, --help            show this help message and exit
-  --broker BROKER       broker host (default: 127.0.0.1)
+  --broker BROKER       broker host (default: 0.0.0.0)
   --broker-port BROKER_PORT
                         broker port (default: 1883)
   --broker-keepalive BROKER_KEEPALIVE
@@ -97,7 +97,7 @@ optional arguments:
   --refresh REFRESH     peak meter refresh in seconds (default: 5)
   --meter               enable console peak meter (default: False)
   --dumb                enable dumb terminal console (default: False)
-  --host HOST           CF32 tcp server host address (default: 127.0.0.1)
+  --host HOST           CF32 tcp server host address (default: 0.0.0.0)
   --port PORT           CF32 tcp server port address (default: 1234)
   --rtltcp              enable CU8 rtltcp server mode (default: False)
   --noserver            disable tcp server (default: False)
