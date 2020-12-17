@@ -48,7 +48,7 @@ print(f"""\
       dest: /lib/systemd/system/mqsoapy.service
       content: |
         [Service]
-        ExecStart=/usr/bin/python3 -u /usr/local/bin/mqsoapy --pause --output {{{{ fs_path }}}}/out
+        ExecStart=/usr/bin/python3 -u /usr/local/bin/mqsoapy --rtltcp --pause --output {{{{ fs_path }}}}/out
         # WorkingDirectory={{{{ fs_path }}}}
         User={os.environ['USER']}
         Restart=on-failure
