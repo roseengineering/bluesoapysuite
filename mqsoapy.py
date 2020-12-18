@@ -10,7 +10,9 @@ import SoapySDR
 from datetime import datetime
 from SoapySDR import SOAPY_SDR_RX, SOAPY_SDR_CF32
 
-restart_seconds = 10
+command_fmt = ">BI"
+command_size = struct.calcsize(command_fmt)
+
 
 parser = argparse.ArgumentParser(
     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -33,7 +35,7 @@ parser.add_argument("--gain", type=np.float, help="front end gain in dB")
 parser.add_argument("--agc", action="store_true", help="enable AGC")
 
 # soapy argString
-parser.add_argument("--direct-samp", help="0=off, 1 or i=I, 2 or q=Q channel")
+parser.add_argument("--direct-samp", help="1 or i=I, 2 or q=Q channel")
 parser.add_argument("--iq-swap", action="store_true", help="swap IQ signals")
 parser.add_argument("--biastee", action="store_true", help="enable bias tee")
 parser.add_argument("--digital-agc", action="store_true", help="enable digital AGC")
@@ -43,6 +45,7 @@ parser.add_argument("--offset-tune", action="store_true", help="enable offset tu
 parser.add_argument("--output", default="out", help="write CF32 samples to file")
 parser.add_argument("--nowave", action="store_true", help="disable WAV header")
 parser.add_argument("--pause", action="store_true", help="pause output")
+parser.add_argument("--restart-seconds", default=10, help="restart delay in seconds")
 
 # peak meter
 parser.add_argument("--refresh", default=5, type=int, help="peak meter refresh in seconds")
@@ -54,7 +57,8 @@ parser.add_argument("--host", default="0.0.0.0", help="CF32 tcp server host addr
 parser.add_argument("--port", type=int, default=1234, help="CF32 tcp server port address")
 parser.add_argument("--rtltcp", action="store_true", help="enable CU8 rtltcp server mode")
 parser.add_argument("--noserver", action="store_true", help="disable tcp server")
-
+parser.add_argument("--freeze", action="store_true", help="freeze tcp server settings")
+parser.add_argument("--wrap", action="store_true", help="wrap 0 Hz to 100 MHz")
 
 
 def gen_topic(name=None):
@@ -254,11 +258,11 @@ def radio_connect():
     global radio
     drivers = [ d['driver'] for d in SoapySDR.Device.enumerate() ]
     info(f"Found drivers: {drivers}")
-    kw = {}
-    if args.driver:
-        kw['driver'] = args.driver
-    info(f"Passing the following arguments: {kw}")
-    radio = SoapySDR.Device(kw)
+    driver = args.driver
+    if not driver:
+        for res in SoapySDR.Device.enumerate(): 
+            driver = res['driver']
+    radio = SoapySDR.Device(driver)
 
 
 def radio_settings():
@@ -320,7 +324,7 @@ def main():
             radio_start()
         except Exception as e:
             info(f"Exception main(): {e}")
-            time.sleep(restart_seconds)
+            time.sleep(args.restart_seconds)
 
 
 def close_file(f, name):
@@ -382,6 +386,29 @@ def close_server():
         sock.close()
 
 
+def tcp_command(data):
+    command, param = struct.unpack(command_fmt, data)
+    if args.freeze:
+        pass
+    elif command == 0x01:
+        if args.direct_samp or args.wrap:
+            param = np.abs(param - 100e6)
+        info('set_frequency: {:.6f} MHz'.format(param / 1e6))
+        radio.setFrequency(SOAPY_SDR_RX, 0, param)
+    elif command == 0x02:
+        info('set_sample_rate: {} Hz'.format(param))
+        radio.setSampleRate(SOAPY_SDR_RX, 0, param)
+    elif command == 0x03:
+        info('set_gain_mode: {}'.format(param))
+        radio.setGainMode(SOAPY_SDR_RX, 0, not param);
+    elif command == 0x04:
+        param = param / 10
+        info('set_gain: {:.1f}'.format(param))
+        radio.setGain(SOAPY_SDR_RX, 0, param);
+    else:
+        info('umimplemented: {:.1f}'.format(command))
+
+
 def tcp_server(data):
     if args.rtltcp:
         data = (data * 128 + 128).astype('B')
@@ -406,7 +433,8 @@ def tcp_server(data):
                     dongle_info = struct.pack('>4sII', b'RTL0', tuner_number, tuner_gains)
                     conn.sendall(dongle_info)
             else:
-                sock.recv(4096)
+                buf = sock.recv(command_size)
+                tcp_command(buf)
 
 
 def init_server():
@@ -451,6 +479,7 @@ def radio_start():
                 sample_num = 0
     except (KeyboardInterrupt, SystemError) as e:
         info(f"Exception radio_start(): {e}")
+        time.sleep(args.restart_seconds)
     if not args.noserver: 
         close_server()
     close_file(outfile, "audio")

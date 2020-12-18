@@ -61,9 +61,10 @@ usage: mqsoapy.py [-h] [--broker BROKER] [--broker-port BROKER_PORT]
                   [--packet-size PACKET_SIZE] [--freq FREQ] [--rate RATE]
                   [--gain GAIN] [--agc] [--direct-samp DIRECT_SAMP]
                   [--iq-swap] [--biastee] [--digital-agc] [--offset-tune]
-                  [--output OUTPUT] [--nowave] [--pause] [--refresh REFRESH]
+                  [--output OUTPUT] [--nowave] [--pause]
+                  [--restart-seconds RESTART_SECONDS] [--refresh REFRESH]
                   [--meter] [--dumb] [--host HOST] [--port PORT] [--rtltcp]
-                  [--noserver]
+                  [--noserver] [--freeze]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -86,7 +87,7 @@ optional arguments:
   --gain GAIN           front end gain in dB (default: None)
   --agc                 enable AGC (default: False)
   --direct-samp DIRECT_SAMP
-                        0=off, 1 or i=I, 2 or q=Q channel (default: None)
+                        1 or i=I, 2 or q=Q channel (default: None)
   --iq-swap             swap IQ signals (default: False)
   --biastee             enable bias tee (default: False)
   --digital-agc         enable digital AGC (default: False)
@@ -94,6 +95,8 @@ optional arguments:
   --output OUTPUT       write CF32 samples to file (default: out)
   --nowave              disable WAV header (default: False)
   --pause               pause output (default: False)
+  --restart-seconds RESTART_SECONDS
+                        restart delay in seconds (default: 10)
   --refresh REFRESH     peak meter refresh in seconds (default: 5)
   --meter               enable console peak meter (default: False)
   --dumb                enable dumb terminal console (default: False)
@@ -101,6 +104,7 @@ optional arguments:
   --port PORT           CF32 tcp server port address (default: 1234)
   --rtltcp              enable CU8 rtltcp server mode (default: False)
   --noserver            disable tcp server (default: False)
+  --freeze              freeze tcp server settings (default: False)
 ```
 
 
