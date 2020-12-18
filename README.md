@@ -64,7 +64,7 @@ usage: mqsoapy.py [-h] [--broker BROKER] [--broker-port BROKER_PORT]
                   [--output OUTPUT] [--nowave] [--pause]
                   [--restart-seconds RESTART_SECONDS] [--refresh REFRESH]
                   [--meter] [--dumb] [--host HOST] [--port PORT] [--rtltcp]
-                  [--noserver] [--freeze]
+                  [--noserver] [--freeze] [--wrap]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -105,6 +105,7 @@ optional arguments:
   --rtltcp              enable CU8 rtltcp server mode (default: False)
   --noserver            disable tcp server (default: False)
   --freeze              freeze tcp server settings (default: False)
+  --wrap                wrap 0 Hz to 100 MHz (default: False)
 ```
 
 
