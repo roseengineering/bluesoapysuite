@@ -1,21 +1,10 @@
 ---
-  # apt
+  # ble
 
   - become: yes
     apt:
       name:
       - python3-dbus
-      - mosquitto
-
-  # pip
-
-  - become: yes
-    pip:
-      name:
-      - bluezero
-      - paho-mqtt
-
-  # ble
 
   - become: yes
     copy:
@@ -35,6 +24,12 @@
         </busconfig>
 
   # code
+
+  - become: yes
+    pip:
+      name:
+      - paho-mqtt
+      - bluezero
 
   - become: yes
     copy:

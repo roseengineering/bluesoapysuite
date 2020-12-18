@@ -19,13 +19,6 @@ print(f"""\
   - set_fact:
       fs_path: "{{{{ fs_path | default('/srv') }}}}"
 
-  # apt
-
-  - become: yes
-    apt:
-      name:
-      - mosquitto
-
   # pip
 
   - become: yes

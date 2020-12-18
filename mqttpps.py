@@ -17,13 +17,6 @@ def copy(filename, path):
 print(f"""\
 ---
 
-  # apt
-
-  - become: yes
-    apt:
-      name:
-      - mosquitto
-
   # pip
 
   - become: yes

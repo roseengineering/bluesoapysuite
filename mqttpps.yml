@@ -1,12 +1,5 @@
 ---
 
-  # apt
-
-  - become: yes
-    apt:
-      name:
-      - mosquitto
-
   # pip
 
   - become: yes

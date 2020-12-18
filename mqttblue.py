@@ -16,23 +16,12 @@ def copy(filename, path):
 
 print(f"""\
 ---
-  # apt
+  # ble
 
   - become: yes
     apt:
       name:
       - python3-dbus
-      - mosquitto
-
-  # pip
-
-  - become: yes
-    pip:
-      name:
-      - bluezero
-      - paho-mqtt
-
-  # ble
 
   - become: yes
     copy:
@@ -52,6 +41,12 @@ print(f"""\
         </busconfig>
 
   # code
+
+  - become: yes
+    pip:
+      name:
+      - paho-mqtt
+      - bluezero
 
 {copy("mqblue.py", "/usr/local/bin/mqblue")}
 {copy("mqclient.py", "/usr/local/bin/mqclient")}
