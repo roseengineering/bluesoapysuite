@@ -1,0 +1,39 @@
+---
+  # code
+
+  - become: yes
+    pip:
+      name:
+      - paho-mqtt
+
+  - become: yes
+    copy:
+      mode: 0755
+      dest: /usr/local/bin/mqclient
+      content: !!binary |
+        IyEvdXNyL2Jpbi9weXRob24zCgppbXBvcnQgc3lzCmltcG9ydCBhcmdwYXJz
+        ZQppbXBvcnQgcGFoby5tcXR0LmNsaWVudCBhcyBtcXR0CgpwYXJzZXIgPSBh
+        cmdwYXJzZS5Bcmd1bWVudFBhcnNlcigKICAgIGZvcm1hdHRlcl9jbGFzcz1h
+        cmdwYXJzZS5Bcmd1bWVudERlZmF1bHRzSGVscEZvcm1hdHRlcikKcGFyc2Vy
+        LmFkZF9hcmd1bWVudCgiLS1icm9rZXIiLCBkZWZhdWx0PSIxMjcuMC4wLjEi
+        LCBoZWxwPSdicm9rZXIgaG9zdCcpCnBhcnNlci5hZGRfYXJndW1lbnQoIi0t
+        cG9ydCIsIGRlZmF1bHQ9MTg4MywgaGVscD0nYnJva2VyIHBvcnQnKQpwYXJz
+        ZXIuYWRkX2FyZ3VtZW50KCItLWtlZXBhbGl2ZSIsIGRlZmF1bHQ9NjAsIGhl
+        bHA9J2Jyb2tlciBrZWVwIGFsaXZlJykKcGFyc2VyLmFkZF9hcmd1bWVudCgi
+        LS10b3BpYyIsIGRlZmF1bHQ9ImYvdHgiLCBoZWxwPSdjb21tYW5kIHRvcGlj
+        JykKCmRlZiBvbl9jb25uZWN0KGNsaWVudCwgdXNlcmRhdGEsIGZsYWdzLCBy
+        Yyk6CiAgICBjbGllbnQuc3Vic2NyaWJlKCIjIikKCmRlZiBvbl9tZXNzYWdl
+        KGNsaWVudCwgdXNlcmRhdGEsIG1zZyk6CiAgICBwcmludChtc2cudG9waWMg
+        KyAiICIgKyBtc2cucGF5bG9hZC5kZWNvZGUoJ2xhdGluJykpCgpkZWYgbWFp
+        bigpOgogICAgY2xpZW50ID0gbXF0dC5DbGllbnQoKQogICAgY2xpZW50Lm9u
+        X2Nvbm5lY3QgPSBvbl9jb25uZWN0CiAgICBjbGllbnQub25fbWVzc2FnZSA9
+        IG9uX21lc3NhZ2UKICAgIGNsaWVudC5jb25uZWN0KGFyZ3MuYnJva2VyLCBh
+        cmdzLnBvcnQsIGFyZ3Mua2VlcGFsaXZlKQogICAgY2xpZW50Lmxvb3Bfc3Rh
+        cnQoKQogICAgd2hpbGUgVHJ1ZToKICAgICAgICBsaW5lID0gbmV4dChzeXMu
+        c3RkaW4pLnJzdHJpcCgpCiAgICAgICAgY2xpZW50LnB1Ymxpc2goYXJncy50
+        b3BpYywgbGluZSkgCgppZiBfX25hbWVfXyA9PSAnX19tYWluX18nOgogICAg
+        YXJncyA9IHBhcnNlci5wYXJzZV9hcmdzKCkKICAgIG1haW4oKQoKCg==
+
+
+
+

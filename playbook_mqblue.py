@@ -49,7 +49,6 @@ print(f"""\
       - bluezero
 
 {copy("mqblue.py", "/usr/local/bin/mqblue")}
-{copy("mqclient.py", "/usr/local/bin/mqclient")}
 
   # output directory
 
