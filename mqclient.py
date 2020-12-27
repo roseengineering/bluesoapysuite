@@ -11,8 +11,14 @@ parser.add_argument("--port", default=1883, help='broker port')
 parser.add_argument("--keepalive", default=60, help='broker keep alive')
 parser.add_argument("--topic", default="f/tx", help='command topic')
 
+def gen_topic(name=None):
+    d = args.topic.split('/')[:-1]
+    if name is not None:
+        d.append(name)
+    return '/'.join(d)
+
 def on_connect(client, userdata, flags, rc):
-    client.subscribe("#")
+    client.subscribe(gen_topic('#'))
 
 def on_message(client, userdata, msg):
     print(msg.topic + " " + msg.payload.decode('latin'))
