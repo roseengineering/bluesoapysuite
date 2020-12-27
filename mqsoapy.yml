@@ -373,18 +373,22 @@
         ZXIuYWRkX2FyZ3VtZW50KCItLWtlZXBhbGl2ZSIsIGRlZmF1bHQ9NjAsIGhl
         bHA9J2Jyb2tlciBrZWVwIGFsaXZlJykKcGFyc2VyLmFkZF9hcmd1bWVudCgi
         LS10b3BpYyIsIGRlZmF1bHQ9ImYvdHgiLCBoZWxwPSdjb21tYW5kIHRvcGlj
-        JykKCmRlZiBvbl9jb25uZWN0KGNsaWVudCwgdXNlcmRhdGEsIGZsYWdzLCBy
-        Yyk6CiAgICBjbGllbnQuc3Vic2NyaWJlKCIjIikKCmRlZiBvbl9tZXNzYWdl
-        KGNsaWVudCwgdXNlcmRhdGEsIG1zZyk6CiAgICBwcmludChtc2cudG9waWMg
-        KyAiICIgKyBtc2cucGF5bG9hZC5kZWNvZGUoJ2xhdGluJykpCgpkZWYgbWFp
-        bigpOgogICAgY2xpZW50ID0gbXF0dC5DbGllbnQoKQogICAgY2xpZW50Lm9u
-        X2Nvbm5lY3QgPSBvbl9jb25uZWN0CiAgICBjbGllbnQub25fbWVzc2FnZSA9
-        IG9uX21lc3NhZ2UKICAgIGNsaWVudC5jb25uZWN0KGFyZ3MuYnJva2VyLCBh
-        cmdzLnBvcnQsIGFyZ3Mua2VlcGFsaXZlKQogICAgY2xpZW50Lmxvb3Bfc3Rh
-        cnQoKQogICAgd2hpbGUgVHJ1ZToKICAgICAgICBsaW5lID0gbmV4dChzeXMu
-        c3RkaW4pLnJzdHJpcCgpCiAgICAgICAgY2xpZW50LnB1Ymxpc2goYXJncy50
-        b3BpYywgbGluZSkgCgppZiBfX25hbWVfXyA9PSAnX19tYWluX18nOgogICAg
-        YXJncyA9IHBhcnNlci5wYXJzZV9hcmdzKCkKICAgIG1haW4oKQoKCg==
+        JykKCmRlZiBnZW5fdG9waWMobmFtZT1Ob25lKToKICAgIGQgPSBhcmdzLnRv
+        cGljLnNwbGl0KCcvJylbOi0xXQogICAgaWYgbmFtZSBpcyBub3QgTm9uZToK
+        ICAgICAgICBkLmFwcGVuZChuYW1lKQogICAgcmV0dXJuICcvJy5qb2luKGQp
+        CgpkZWYgb25fY29ubmVjdChjbGllbnQsIHVzZXJkYXRhLCBmbGFncywgcmMp
+        OgogICAgY2xpZW50LnN1YnNjcmliZShnZW5fdG9waWMoJyMnKSkKCmRlZiBv
+        bl9tZXNzYWdlKGNsaWVudCwgdXNlcmRhdGEsIG1zZyk6CiAgICBwcmludCht
+        c2cudG9waWMgKyAiICIgKyBtc2cucGF5bG9hZC5kZWNvZGUoJ2xhdGluJykp
+        CgpkZWYgbWFpbigpOgogICAgY2xpZW50ID0gbXF0dC5DbGllbnQoKQogICAg
+        Y2xpZW50Lm9uX2Nvbm5lY3QgPSBvbl9jb25uZWN0CiAgICBjbGllbnQub25f
+        bWVzc2FnZSA9IG9uX21lc3NhZ2UKICAgIGNsaWVudC5jb25uZWN0KGFyZ3Mu
+        YnJva2VyLCBhcmdzLnBvcnQsIGFyZ3Mua2VlcGFsaXZlKQogICAgY2xpZW50
+        Lmxvb3Bfc3RhcnQoKQogICAgd2hpbGUgVHJ1ZToKICAgICAgICBsaW5lID0g
+        bmV4dChzeXMuc3RkaW4pLnJzdHJpcCgpCiAgICAgICAgY2xpZW50LnB1Ymxp
+        c2goYXJncy50b3BpYywgbGluZSkgCgppZiBfX25hbWVfXyA9PSAnX19tYWlu
+        X18nOgogICAgYXJncyA9IHBhcnNlci5wYXJzZV9hcmdzKCkKICAgIG1haW4o
+        KQoKCg==
 
 
 
