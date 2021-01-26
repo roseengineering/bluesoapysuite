@@ -262,7 +262,7 @@ def radio_connect():
     if not driver:
         for res in SoapySDR.Device.enumerate(): 
             driver = res['driver']
-    radio = SoapySDR.Device(driver)
+    radio = SoapySDR.Device({ 'driver': driver })
 
 
 def radio_settings():
